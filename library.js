@@ -48,8 +48,8 @@ dialogSubmitButton.addEventListener('click', (event) => {
     const form = dialog.querySelector('form');
     if (form.checkValidity()) {
         event.preventDefault();// Don't want to submit this form
-        const book = addBookToLibrary();
-        displayNewBook(book);
+        const bookInfo = addBookToLibrary();
+        displayNewBook(bookInfo.book, bookInfo.position);
         dialog.close();
     } 
 });
@@ -62,14 +62,14 @@ function addBookToLibrary() {
 
     const book = new Book(dialogInputName.value, dialogInputAuthor.value,
                 dialogInputPages.value, dialogInputRead.checked);
-    myLibrary.push(book);
-    return book;
+    const position = myLibrary.push(book);
+    return {book, position};
 }
 
-function displayNewBook(book) {
+function displayNewBook(book, position) {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.setAttribute('data-position', myLibrary.length - 1);
+    card.setAttribute('data-position', position);
 
     const title = document.createElement('p');
     title.textContent = `"${book.title}"`;
