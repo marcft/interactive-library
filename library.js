@@ -10,10 +10,11 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        const isRead = read ? 'read' : 'not read yet';
+}
+
+Book.prototype.info = function() {
+    const isRead = read ? 'read' : 'not read yet';
         return `${this.title} by ${this.author}, ${this.pages} pages, ${isRead}`;
-    }
 }
 
 // Display books initially saved in myLibrary
