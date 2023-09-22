@@ -29,18 +29,17 @@ class Library {
 
     addBookToLibrary(name, author, pages, read) {
         const book = new Book(name, author, pages, read);
+        //Substract 1 because we want position not length
         const position = this.#myLibrary.push(book) - 1;
         return {book, position};
     }
 
     changeBookIsRead(position) {
-        console.log(this.#myLibrary[0]);
         this.#myLibrary[position].read = !this.#myLibrary[position].read;
     }
 
     deleteBook(position) {
         this.#myLibrary.splice(position, 1);
-        console.log(this.#myLibrary);
     }
 
 }
@@ -52,9 +51,10 @@ class DisplayController {
         this.library = library;
 
         //Initialize library's previous books
-        this.library.myLibrary.forEach(
-            book => this.#displayBook(book)
-        );
+        for (let i = 0; i < this.library.myLibrary.length; i++) {
+            const book = this.library.myLibrary[i];
+            this.#displayBook(book, i);
+        }
     }
 
     addNewBook(nameInfo, authorInfo, pagesInfo, readInfo) {
@@ -153,7 +153,6 @@ function addNewBook() {
     const dialogInputPages = dialog.querySelector('#book-pages');
     const dialogInputRead = dialog.querySelector('#book-read');
 
-    
     displayController.addNewBook(dialogInputName.value, dialogInputAuthor.value,
                                 dialogInputPages.value, dialogInputRead.checked);
 }
